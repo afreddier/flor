@@ -183,7 +183,7 @@
             <span class="white--text font-weight-black text-caption">{{ item.qtyItems }}</span>
           </v-avatar>
 
-          <v-btn  fab dark x-small color="brown">
+          <v-btn @click="removeItemOfProductsDetails(item)"  fab dark x-small color="brown">
             <v-icon size="26">mdi-close-thick</v-icon>
           </v-btn>
 
@@ -201,7 +201,6 @@
 
         </div>
     </v-container>
-
     <!-- <v-footer app :padless="true">
       <v-container class="pa-0">
         <div class="text-center">
@@ -286,33 +285,44 @@ import Modal from '~/components/modal';
       }
     },
     methods: {
+      removeItemOfProductsDetails(item) {
+        this.productsDetails = this.productsDetails.filter(x => x !== item)
+      },
+
       passiveM() {
         let passive = '';
         for(const index in this.productsDetails){
           passive = Number(passive) + Number(this.productsDetails[index].boxPrice);
         }
-        this.passive = passive;
+        this.passive ? this.passive = passive.toFixed(2) : '';
       },
 
       addedOperationM() {
-        this.addedOperation = this.qtyItems * this.priceByItems;
+        let addedOperation = this.qtyItems * this.priceByItems;
+        this.addedOperation = addedOperation.toFixed(2);
       },
+
       heritageM() {
         let heritage = '';
         for(const index in this.productsDetails){
           heritage = Number(heritage) + Number(this.productsDetails[index].total)
         }
-        this.heritage = heritage;
+        this.heritage ? this.heritage = heritage.toFixed(2) : '';
       },
 
       totalEarningsM(){
-        this.totalEarnings = this.heritage - this.passive;
+        let totalEarnings = this.heritage - this.passive;
+        this.totalEarnings = totalEarnings.toFixed(2);
       },
+
       entryM() {
-        this.entry = (this.totalEarnings / 100) * 90;
+        let entry = (this.totalEarnings / 100) * 90;
+        this.entry = entry.toFixed(2);
       },
+
       titheM() {
-        this.tithe = (this.totalEarnings / 100) * 10;
+        let tithe = (this.totalEarnings / 100) * 10;
+        this.tithe = tithe.toFixed(2);
       },
 
       calculateOperation(){
