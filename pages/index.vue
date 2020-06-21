@@ -209,7 +209,7 @@
         grow
         class=""
       >
-        <v-tab>
+        <v-tab style="min-width: 0;">
           <v-badge
             color="deep-purple accent-4"
             :content="item.boxPrice"
@@ -242,7 +242,7 @@
             overlap
             offset-x="20"
           >
-            <v-icon size="24" dark>mdi-cart</v-icon>
+            <v-icon size="24" dark>mdi-currency-usd-circle-outline</v-icon>
           </v-badge>
         </v-tab>
 
@@ -264,7 +264,7 @@
         <v-tab style="min-width: 0;">
           <v-badge
             color="red"
-            content="0"
+            :content="item.entryForItem"
             overlap
             offset-x="20"
           >
@@ -346,6 +346,7 @@ import Modal from '~/components/modal';
       qtyItems: '',
       priceByItems: '',
       totalEarnings: '',
+      entryForItem: '',
       productsDetails: [],
 
       addedOperation: '',
@@ -367,14 +368,12 @@ import Modal from '~/components/modal';
     },
     methods: {
       removeItemOfProductsDetails(item) {
-        // let alertError = {
-        //   dialog: true,
-        //   buttonClose: 'Cancelar',
-        //   buttonAccept: 'Eliminar',
-        //   title: 'Campo vacio',
-        //   description: ''
-        // }
         this.productsDetails = this.productsDetails.filter(x => x !== item)
+      },
+
+      entryForItemM() {
+        let entryForItem = Number(this.addedOperation) - Number(this.boxPrice);
+        this.entryForItem = entryForItem.toFixed(2);
       },
 
       passiveM() {
@@ -426,6 +425,9 @@ import Modal from '~/components/modal';
             priceByItems: this.priceByItems,
             total: this.addedOperation
           }
+          this.entryForItemM();
+          resource.entryForItem = this.entryForItem;
+
           this.productsDetails.push(resource);
 
           this.nameItem = '';
@@ -436,7 +438,7 @@ import Modal from '~/components/modal';
           let alertError = {
             dialog: true,
             buttonClose: 'Cerrar',
-            title: 'Campo vacio',
+            title: 'Atención',
             description: ''
           }
           if(!this.nameItem){
