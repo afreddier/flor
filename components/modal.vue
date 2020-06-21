@@ -6,7 +6,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green darken-1" text @click="dialog = false" v-if="alertError.buttonClose">{{ alertError.buttonClose }}</v-btn>
-          <v-btn color="green darken-1" text @click="dialog = false" v-if="alertError.buttonAccept">Aceptar</v-btn>
+          <v-btn color="green darken-1" text @click="dialog = false" v-if="alertError.buttonAccept">{{ alertError.buttonAccept }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

@@ -159,7 +159,7 @@
     
 <Modal :alertError="alertError"/>
 
-    <v-container class="pa-0">
+    <!-- <v-container class="pa-0">
       <div class="text-center" v-for="(item, index) in productsDetails" :key="index">
           <v-chip
             class="px-2 mr-0"
@@ -200,7 +200,88 @@
           </v-avatar>
 
         </div>
+    </v-container> -->
+
+    <v-container class="pa-0" v-for="(item, index) in productsDetails" :key="index">
+      <v-tabs
+        dark
+        color="pink"
+        grow
+        class=""
+      >
+        <v-tab>
+          <v-badge
+            color="deep-purple accent-4"
+            :content="item.boxPrice"
+            offset-x="40"
+            offset-y="1"
+          >
+            <span style="background:red; color:white; border-radius: 50%;" class="mr-1 pa-1">{{ index +1 }}</span>{{ item.name }}
+          </v-badge>
+        </v-tab>
+
+        <v-tab style="min-width: 0;">
+          <v-badge
+            color="pink"
+            :content="item.qtyItems"
+            overlap
+            offset-x="20"
+          >
+            <v-icon size="24" dark>mdi-cart</v-icon>
+          </v-badge>
+        </v-tab>
+
+        <v-tab style="min-width: 0;">
+            <v-icon size="24" dark>mdi-close-outline</v-icon>
+        </v-tab>
+
+        <v-tab style="min-width: 0;">
+          <v-badge
+            color="pink"
+            :content="item.priceByItems"
+            overlap
+            offset-x="20"
+          >
+            <v-icon size="24" dark>mdi-cart</v-icon>
+          </v-badge>
+        </v-tab>
+
+        <v-tab style="min-width: 0;">
+            <v-icon size="24" dark>mdi-equal</v-icon>
+        </v-tab>
+
+        <v-tab style="min-width: 0;">
+          <v-badge
+            color="blue-grey"
+            :content="item.total"
+            overlap
+            offset-x="20"
+          >
+            <v-icon size="24" dark>mdi-cash-remove</v-icon>
+          </v-badge>
+        </v-tab>
+
+        <v-tab style="min-width: 0;">
+          <v-badge
+            color="red"
+            content="0"
+            overlap
+            offset-x="20"
+          >
+            <v-icon size="24" dark>mdi-cash-refund</v-icon>
+          </v-badge>
+        </v-tab>
+
+        <v-tab @click="removeItemOfProductsDetails(item)" style="min-width: 0;">
+          <v-icon color="red" size="24" dark>mdi-delete</v-icon>
+        </v-tab>
+      </v-tabs>
     </v-container>
+
+
+
+
+
     <!-- <v-footer app :padless="true">
       <v-container class="pa-0">
         <div class="text-center">
@@ -286,6 +367,13 @@ import Modal from '~/components/modal';
     },
     methods: {
       removeItemOfProductsDetails(item) {
+        // let alertError = {
+        //   dialog: true,
+        //   buttonClose: 'Cancelar',
+        //   buttonAccept: 'Eliminar',
+        //   title: 'Campo vacio',
+        //   description: ''
+        // }
         this.productsDetails = this.productsDetails.filter(x => x !== item)
       },
 
@@ -294,7 +382,8 @@ import Modal from '~/components/modal';
         for(const index in this.productsDetails){
           passive = Number(passive) + Number(this.productsDetails[index].boxPrice);
         }
-        this.passive ? this.passive = passive.toFixed(2) : '';
+        this.passive = passive;
+        this.passive ? passive.toFixed(2) : '';
       },
 
       addedOperationM() {
@@ -307,7 +396,8 @@ import Modal from '~/components/modal';
         for(const index in this.productsDetails){
           heritage = Number(heritage) + Number(this.productsDetails[index].total)
         }
-        this.heritage ? this.heritage = heritage.toFixed(2) : '';
+        this.heritage = heritage;
+        this.heritage ? this.heritage.toFixed(2) : '';
       },
 
       totalEarningsM(){
@@ -376,5 +466,10 @@ import Modal from '~/components/modal';
   }
  .v-chip__content .v-avatar {
    width: 28px !important;
+ }
+
+
+ .v-slide-group__prev--disabled{
+   display: none!important;
  }
 </style>
