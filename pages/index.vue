@@ -202,8 +202,9 @@
         </div>
     </v-container> -->
 
-    <v-container class="pa-0" v-for="(item, index) in productsDetails" :key="index">
+    <v-container class="pa-0">
       <v-tabs
+        v-for="(item, index) in productsDetails" :key="index"
         dark
         color="pink"
         grow
