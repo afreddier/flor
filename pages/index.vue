@@ -208,7 +208,6 @@
         dark
         color="pink"
         grow
-        class=""
       >
         <v-tab style="min-width: 0;">
           <v-badge
@@ -473,6 +472,6 @@ import Modal from '~/components/modal';
 
 
  .v-slide-group__prev--disabled{
-   display: none!important;
+   /* display: none!important; */
  }
 </style>
