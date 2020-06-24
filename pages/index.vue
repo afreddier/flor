@@ -18,7 +18,7 @@
         <v-switch
           v-model="$vuetify.theme.dark"
           color="pink"
-          class="mt-4"
+          class="mt-6"
         ></v-switch>
 
 
@@ -97,12 +97,9 @@
               </v-tabs>
             </v-toolbar>
 
-
-
-
           </template>
+<v-btn class="ma-0" tile color="pink" dark @click="deleteAll">Eliminar todo</v-btn>
     </v-app-bar>
-
     <v-form>
       <v-container>
         <v-row>
@@ -158,49 +155,6 @@
     </v-form>
     
 <Modal :alertError="alertError"/>
-
-    <!-- <v-container class="pa-0">
-      <div class="text-center" v-for="(item, index) in productsDetails" :key="index">
-          <v-chip
-            class="px-2 mr-0"
-            color="pink"
-            label
-            text-color="white"
-          >
-            <v-avatar
-              left
-              class="green darken-4 mr-0"
-            >
-              <span class="white--text font-weight-black text-caption">{{ index + 1 }}</span>
-            </v-avatar>
-            {{ item.name }}
-            <v-avatar right color="teal darken-4 ml-0">
-              <span class="white--text font-weight-black text-caption">{{ item.boxPrice }}</span>
-            </v-avatar>
-          </v-chip>
-
-          <v-avatar color="teal" size="36">
-            <span class="white--text font-weight-black text-caption">{{ item.qtyItems }}</span>
-          </v-avatar>
-
-          <v-btn @click="removeItemOfProductsDetails(item)"  fab dark x-small color="brown">
-            <v-icon size="26">mdi-close-thick</v-icon>
-          </v-btn>
-
-          <v-avatar color="teal" size="36">
-            <span class="white--text font-weight-black text-caption">{{ item.priceByItems }}</span>
-          </v-avatar>
-
-          <v-btn dark x-small fab color="red">
-            <v-icon size="26" dark>mdi-equal</v-icon>
-          </v-btn>
-
-          <v-avatar color="secondary">
-            <span class="white--text font-weight-black text-caption">{{ item.total }}</span>
-          </v-avatar>
-
-        </div>
-    </v-container> -->
 
     <v-container class="pa-0">
       <v-tabs
@@ -366,9 +320,24 @@ import Modal from '~/components/modal';
         this.titheM();
       }
     },
+    created() {
+      let arr = localStorage.getItem('itemArr');
+      if (arr === null){
+        this.productsDetails = [];
+      } else {
+        this.productsDetails = JSON.parse(arr);
+      }
+    },
     methods: {
+      deleteAll() {
+        this.productsDetails = [];
+        localStorage.removeItem('itemArr');
+      },
       removeItemOfProductsDetails(item) {
-        this.productsDetails = this.productsDetails.filter(x => x !== item)
+        this.productsDetails = this.productsDetails.filter(x => {
+          return x !== item
+        })
+        localStorage.setItem('itemArr', JSON.stringify(this.productsDetails));
       },
 
       entryForItemM() {
@@ -429,6 +398,7 @@ import Modal from '~/components/modal';
           resource.entryForItem = this.entryForItem;
 
           this.productsDetails.push(resource);
+          localStorage.setItem('itemArr', JSON.stringify(this.productsDetails));
 
           this.nameItem = '';
           this.boxPrice = '';
